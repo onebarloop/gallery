@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
+import { AdvancedImage } from "@cloudinary/react";
+import { fill, scale, limitFit } from "@cloudinary/url-gen/actions/resize";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import Upload from "./components/Upload";
 
-function App() {
+export default function App() {
+  const cld: Cloudinary = new Cloudinary({
+    cloud: {
+      cloudName: "dt7yjhfbb",
+    },
+  });
+
+  type picture = {
+    public_id: string;
+    width: number;
+    height: number;
+  };
+
+  const [gallery, setGallery] = useState<picture[]>([]);
+
+  console.log(gallery);
+
+  useEffect(() => {
+    async function loadGallery() {
+      const response = await fetch(
+        "https://res.cloudinary.com/dt7yjhfbb/image/list/gallery.json",
+        { method: "GET" }
+      );
+      const data = await response.json();
+      setGallery(data.resources);
+    }
+    loadGallery();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Upload />
+      <StyledGallery>
+        {gallery.map(({ public_id }) => (
+          <StyledWrapper>
+            <StyledImage
+              key={public_id}
+              cldImg={cld
+                .image(public_id)
+                .resize(fill().width(400).height(400))}
+            />
+          </StyledWrapper>
+        ))}
+      </StyledGallery>
     </div>
   );
 }
 
-export default App;
+const StyledGallery = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+`;
+
+const StyledWrapper = styled.div`
+  border: 5px solid black;
+  width: 200px;
+  height: 200px;
+`;
+
+const StyledImage = styled(AdvancedImage)`
+  width: 200px;
+  height: 200px;
+`;
