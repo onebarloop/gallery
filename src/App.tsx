@@ -19,6 +19,8 @@ export default function App() {
   };
 
   const [gallery, setGallery] = useState<picture[]>([]);
+  const [popup, setPopup] = useState<boolean>(false);
+  console.log(popup);
 
   console.log(gallery);
 
@@ -36,7 +38,8 @@ export default function App() {
 
   return (
     <div>
-      <Upload />
+      <button onClick={() => setPopup(!popup)}>Add New Picture</button>
+      {popup && <Upload />}
       <StyledGallery>
         {gallery.map(({ public_id }) => (
           <StyledWrapper>
