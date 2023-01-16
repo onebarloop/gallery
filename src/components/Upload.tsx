@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
+import { Player } from "@lottiefiles/react-lottie-player";
+import Button from "./Button";
 
-export default function Upload() {
+type Props = {
+  onLoadGallery: () => Promise<void>;
+  onSetPopup: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Upload({ onLoadGallery, onSetPopup }: Props) {
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
@@ -15,7 +22,6 @@ export default function Upload() {
     setLoading(true);
     if (selectedImage !== undefined) {
       const data = new FormData();
-
       data.append("file", selectedImage);
       data.append("tags", tags.toString());
       data.append("upload_preset", "gallery_preset");
@@ -34,6 +40,8 @@ export default function Upload() {
       }
     }
     setLoading(false);
+    onLoadGallery();
+    onSetPopup(false);
   }
 
   function changeImage(event: React.SyntheticEvent): void {
@@ -46,7 +54,6 @@ export default function Upload() {
       checked: boolean;
     };
     if (target.checked === true) {
-      console.log(target.value);
       setTags([...tags, target.value]);
     } else {
       setTags(tags.filter((tag) => tag !== target.value));
@@ -56,10 +63,17 @@ export default function Upload() {
     <StyledPopup>
       {selectedImage !== undefined ? (
         <StyledWrapper>
-          <img
-            alt="pic"
-            src={loading ? "../logo.svg" : URL.createObjectURL(selectedImage)}
-          />
+          {loading ? (
+            <Player
+              src="https://assets3.lottiefiles.com/packages/lf20_mrcseu1q.json"
+              className="player"
+              loop
+              autoplay
+              style={{ width: "300px", height: "300px" }}
+            />
+          ) : (
+            <img alt="pic" src={URL.createObjectURL(selectedImage)} />
+          )}
         </StyledWrapper>
       ) : (
         <StyledWrapper></StyledWrapper>
@@ -118,7 +132,12 @@ export default function Upload() {
           </section>
         </fieldset>
 
-        <button type="submit">Submit</button>
+        <Button
+          name={loading ? "upload..." : "Submit"}
+          width={100}
+          height={30}
+          disabled={loading ? true : false}
+        />
       </form>
     </StyledPopup>
   );
@@ -126,12 +145,12 @@ export default function Upload() {
 
 const StyledPopup = styled.article`
   position: absolute;
-  background-color: grey;
+  background-color: #1f1e1e;
   padding-top: 15px;
-  width: 50vw;
+  width: 50%;
   left: 50%;
   margin-left: -25vw;
-  height: 60vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,8 +160,8 @@ const StyledPopup = styled.article`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    margin: 5px 0;
+    gap: 7px;
+    margin: 10px 0;
   }
 
   input[type="file"] {
@@ -163,6 +182,7 @@ const StyledWrapper = styled.div`
   height: 90%;
   background-color: black;
   overflow: hidden;
+  padding: auto;
 
   img {
     width: 100%;

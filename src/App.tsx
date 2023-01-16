@@ -1,6 +1,11 @@
 import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
 import { AdvancedImage } from "@cloudinary/react";
-import { fill, scale, limitFit } from "@cloudinary/url-gen/actions/resize";
+import {
+  fill,
+  scale,
+  limitFit,
+  crop,
+} from "@cloudinary/url-gen/actions/resize";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Upload from "./components/Upload";
@@ -24,37 +29,38 @@ export default function App() {
 
   console.log(gallery);
 
+  async function loadGallery() {
+    const response = await fetch(
+      "https://res.cloudinary.com/dt7yjhfbb/image/list/gallery.json",
+      { method: "GET" }
+    );
+    const data = await response.json();
+    setGallery(data.resources);
+  }
+
   useEffect(() => {
-    async function loadGallery() {
-      const response = await fetch(
-        "https://res.cloudinary.com/dt7yjhfbb/image/list/gallery.json",
-        { method: "GET" }
-      );
-      const data = await response.json();
-      setGallery(data.resources);
-    }
     loadGallery();
   }, []);
 
   return (
-    <div>
+    <StyledMain>
       <button onClick={() => setPopup(!popup)}>Add New Picture</button>
-      {popup && <Upload />}
+      {popup && <Upload onLoadGallery={loadGallery} onSetPopup={setPopup} />}
       <StyledGallery>
         {gallery.map(({ public_id }) => (
           <StyledWrapper>
-            <StyledImage
-              key={public_id}
-              cldImg={cld
-                .image(public_id)
-                .resize(fill().width(400).height(400))}
-            />
+            <StyledImage key={public_id} cldImg={cld.image(public_id)} />
           </StyledWrapper>
         ))}
       </StyledGallery>
-    </div>
+    </StyledMain>
   );
 }
+
+const StyledMain = styled.main`
+  background-color: #2d2b2b;
+  height: 100vh;
+`;
 
 const StyledGallery = styled.div`
   display: flex;
@@ -66,9 +72,11 @@ const StyledWrapper = styled.div`
   border: 5px solid black;
   width: 200px;
   height: 200px;
+  background-color: black;
 `;
 
 const StyledImage = styled(AdvancedImage)`
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;
