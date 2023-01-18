@@ -20,10 +20,10 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
       const data = new FormData();
       data.append("file", selectedImage);
       data.append("tags", tags.toString());
-      data.append("upload_preset", "gallery_preset");
+      data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET!);
       try {
         const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dt7yjhfbb/image/upload",
+          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/upload`,
           { method: "POST", body: data }
         );
         if (response.ok === true) {

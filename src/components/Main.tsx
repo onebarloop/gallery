@@ -12,7 +12,7 @@ export default function Main({
 }: Props & { popup: boolean }) {
   const cld: Cloudinary = new Cloudinary({
     cloud: {
-      cloudName: "dt7yjhfbb",
+      cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,
     },
   });
 

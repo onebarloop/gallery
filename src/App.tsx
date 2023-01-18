@@ -9,7 +9,7 @@ export default function App() {
 
   async function loadGallery(tag: string) {
     const response = await fetch(
-      `https://res.cloudinary.com/dt7yjhfbb/image/list/${tag}.json`,
+      `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/list/${tag}.json`,
       { method: "GET" }
     );
     const data = await response.json();
