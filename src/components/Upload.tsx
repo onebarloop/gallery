@@ -1,14 +1,10 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Button from "./Button";
+import { Props } from "../utils/Props";
 
-type Props = {
-  onLoadGallery: () => Promise<void>;
-  onSetPopup: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function Upload({ onLoadGallery, onSetPopup }: Props) {
+export default function Upload({ setGallery, gallery, setPopup }: Props) {
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
@@ -32,6 +28,8 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
         );
         if (response.ok === true) {
           console.log("Submitted");
+          const newPic = await response.json();
+          setGallery([newPic, ...gallery]);
         } else {
           console.error("Submit failed");
         }
@@ -40,8 +38,7 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
       }
     }
     setLoading(false);
-    onLoadGallery();
-    onSetPopup(false);
+    setPopup(false);
   }
 
   function changeImage(event: React.SyntheticEvent): void {
@@ -61,6 +58,7 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
   }
   return (
     <StyledPopup>
+      <Button width={30} height={30} name="X" onClick={() => setPopup(false)} />
       {selectedImage !== undefined ? (
         <StyledWrapper>
           {loading ? (
@@ -69,7 +67,7 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
               className="player"
               loop
               autoplay
-              style={{ width: "300px", height: "300px" }}
+              style={{ width: "300px", height: "600px" }}
             />
           ) : (
             <img alt="pic" src={URL.createObjectURL(selectedImage)} />
@@ -98,36 +96,45 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
                 onChange={handleCheckbox}
                 type="checkbox"
                 name="tags"
-                value="woman"
-              />
-              Woman
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                name="tags"
                 value="happy"
-                onChange={handleCheckbox}
               />
-              Happy
+              happy
             </label>
             <label>
               <input
                 type="checkbox"
                 name="tags"
-                value="man"
+                value="sad"
                 onChange={handleCheckbox}
               />
-              Man
+              sad
             </label>
             <label>
               <input
                 type="checkbox"
                 name="tags"
-                value="student"
+                value="thoughtful"
                 onChange={handleCheckbox}
               />
-              Student
+              thoughtful
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="tags"
+                value="relieved"
+                onChange={handleCheckbox}
+              />
+              relieved
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="tags"
+                value="depressed"
+                onChange={handleCheckbox}
+              />
+              depressed
             </label>
           </section>
         </fieldset>
@@ -146,7 +153,8 @@ export default function Upload({ onLoadGallery, onSetPopup }: Props) {
 const StyledPopup = styled.article`
   position: absolute;
   background-color: #1f1e1e;
-  padding-top: 15px;
+  padding-top: 30px;
+  top: 5vh;
   width: 50%;
   left: 50%;
   margin-left: -25vw;
@@ -155,25 +163,48 @@ const StyledPopup = styled.article`
   flex-direction: column;
   align-items: center;
   color: white;
+  box-shadow: 6px 6px 2px 1px rgba(19, 19, 20);
+  border: 2px solid black;
+  z-index: 1;
+  button:first-child {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 7px;
+    gap: 3px;
     margin: 10px 0;
   }
 
   input[type="file"] {
     display: none;
   }
+
+  label {
+    margin: 10px;
+  }
+
+  fieldset {
+    margin-bottom: 15px;
+  }
 `;
 
 const StyledImgInput = styled.label`
   background-color: none;
   border: 1px solid white;
-  padding: 5px;
+  padding: 10px;
+  font-size: 1.2em;
   cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
 `;
 
 const StyledWrapper = styled.div`
