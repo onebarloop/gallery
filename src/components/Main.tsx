@@ -1,8 +1,8 @@
-import { Cloudinary } from "@cloudinary/url-gen";
-import { AdvancedImage } from "@cloudinary/react";
-import styled from "styled-components";
-import Upload from "./Upload";
-import type { Props } from "../utils/Props";
+import { Cloudinary } from '@cloudinary/url-gen';
+import { AdvancedImage } from '@cloudinary/react';
+import styled from 'styled-components';
+import Upload from './Upload';
+import type { Props } from '../utils/Props';
 
 export default function Main({
   popup,
@@ -41,7 +41,7 @@ const StyledGallery = styled.div<{ popup: boolean }>`
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 15px;
-  filter: ${(props) => props.popup && "blur(10px)"};
+  filter: ${(props) => props.popup && 'blur(10px)'};
   transition: filter 0.4s;
 `;
 

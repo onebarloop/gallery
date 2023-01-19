@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import type { HeaderProps } from "../utils/Props";
-import Button from "./Button";
+import styled from 'styled-components';
+import type { HeaderProps } from '../utils/Props';
+import Button from './Button';
 
 export default function Header({ setPopup, popup, loadGallery }: HeaderProps) {
-  const filters = ["happy", "sad", "thoughtful", "relieved", "depressed"];
+  const filters = ['happy', 'sad', 'thoughtful', 'relieved', 'depressed'];
 
   return (
     <StyledHeader>
@@ -23,12 +23,12 @@ export default function Header({ setPopup, popup, loadGallery }: HeaderProps) {
         <Button
           width={30}
           height={30}
-          onClick={() => loadGallery("gallery")}
-          name="X"
+          onClick={() => loadGallery('gallery')}
+          name='X'
         />
       </div>
       <Button
-        name={"NEW"}
+        name={'NEW'}
         width={100}
         height={60}
         onClick={() => setPopup(!popup)}

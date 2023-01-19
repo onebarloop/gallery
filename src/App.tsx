@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import type { picture } from "./utils/Props";
-import Main from "./components/Main";
-import Header from "./components/Header";
+import { useEffect, useState } from 'react';
+import type { picture } from './utils/Props';
+import Main from './components/Main';
+import Header from './components/Header';
 
 export default function App() {
   const [gallery, setGallery] = useState<picture[]>([]);
@@ -10,14 +10,14 @@ export default function App() {
   async function loadGallery(tag: string) {
     const response = await fetch(
       `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/list/${tag}.json`,
-      { method: "GET" }
+      { method: 'GET' }
     );
     const data = await response.json();
     setGallery(data.resources);
   }
 
   useEffect(() => {
-    loadGallery("gallery");
+    loadGallery('gallery');
   }, []);
 
   return (

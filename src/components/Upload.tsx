@@ -1,15 +1,15 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { Player } from "@lottiefiles/react-lottie-player";
-import Button from "./Button";
-import { Props } from "../utils/Props";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { Player } from '@lottiefiles/react-lottie-player';
+import Button from './Button';
+import { Props } from '../utils/Props';
 
 export default function Upload({ setGallery, gallery, setPopup }: Props) {
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
 
-  const [tags, setTags] = useState<string[]>(["gallery"]);
+  const [tags, setTags] = useState<string[]>(['gallery']);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,20 +18,20 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
     setLoading(true);
     if (selectedImage !== undefined) {
       const data = new FormData();
-      data.append("file", selectedImage);
-      data.append("tags", tags.toString());
-      data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET!);
+      data.append('file', selectedImage);
+      data.append('tags', tags.toString());
+      data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET!);
       try {
         const response = await fetch(
           `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/upload`,
-          { method: "POST", body: data }
+          { method: 'POST', body: data }
         );
         if (response.ok === true) {
-          console.log("Submitted");
+          console.log('Submitted');
           const newPic = await response.json();
           setGallery([newPic, ...gallery]);
         } else {
-          console.error("Submit failed");
+          console.error('Submit failed');
         }
       } catch (error) {
         console.log(error);
@@ -58,19 +58,19 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
   }
   return (
     <StyledPopup>
-      <Button width={30} height={30} name="X" onClick={() => setPopup(false)} />
+      <Button width={30} height={30} name='X' onClick={() => setPopup(false)} />
       {selectedImage !== undefined ? (
         <StyledWrapper>
           {loading ? (
             <Player
-              src="https://assets3.lottiefiles.com/packages/lf20_mrcseu1q.json"
-              className="player"
+              src='https://assets3.lottiefiles.com/packages/lf20_mrcseu1q.json'
+              className='player'
               loop
               autoplay
-              style={{ width: "300px", height: "600px" }}
+              style={{ width: '300px', height: '600px' }}
             />
           ) : (
-            <img alt="pic" src={URL.createObjectURL(selectedImage)} />
+            <img alt='pic' src={URL.createObjectURL(selectedImage)} />
           )}
         </StyledWrapper>
       ) : (
@@ -81,9 +81,9 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
           Choose Picture
           <input
             onChange={changeImage}
-            name="pic"
-            type="file"
-            accept="image/png, image/jpeg"
+            name='pic'
+            type='file'
+            accept='image/png, image/jpeg'
             required
           />
         </StyledImgInput>
@@ -94,44 +94,44 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
             <label>
               <input
                 onChange={handleCheckbox}
-                type="checkbox"
-                name="tags"
-                value="happy"
+                type='checkbox'
+                name='tags'
+                value='happy'
               />
               happy
             </label>
             <label>
               <input
-                type="checkbox"
-                name="tags"
-                value="sad"
+                type='checkbox'
+                name='tags'
+                value='sad'
                 onChange={handleCheckbox}
               />
               sad
             </label>
             <label>
               <input
-                type="checkbox"
-                name="tags"
-                value="thoughtful"
+                type='checkbox'
+                name='tags'
+                value='thoughtful'
                 onChange={handleCheckbox}
               />
               thoughtful
             </label>
             <label>
               <input
-                type="checkbox"
-                name="tags"
-                value="relieved"
+                type='checkbox'
+                name='tags'
+                value='relieved'
                 onChange={handleCheckbox}
               />
               relieved
             </label>
             <label>
               <input
-                type="checkbox"
-                name="tags"
-                value="depressed"
+                type='checkbox'
+                name='tags'
+                value='depressed'
                 onChange={handleCheckbox}
               />
               depressed
@@ -140,7 +140,7 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
         </fieldset>
 
         <Button
-          name={loading ? "upload..." : "Submit"}
+          name={loading ? 'upload...' : 'Submit'}
           width={100}
           height={30}
           disabled={loading ? true : false}
@@ -180,7 +180,7 @@ const StyledPopup = styled.article`
     margin: 10px 0;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: none;
   }
 
