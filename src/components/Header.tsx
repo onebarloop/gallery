@@ -3,7 +3,13 @@ import type { HeaderProps } from '../utils/Props';
 import Button from './Button';
 
 export default function Header({ setPopup, popup, loadGallery }: HeaderProps) {
-  const filters = ['happy', 'sad', 'thoughtful', 'relieved', 'depressed'];
+  const filters: string[] = [
+    'happy',
+    'sad',
+    'thoughtful',
+    'relieved',
+    'depressed',
+  ];
 
   return (
     <StyledHeader>
