@@ -10,12 +10,14 @@ type Props = {
   setPopup: Dispatch<SetStateAction<boolean>>;
   setGallery: React.Dispatch<React.SetStateAction<picture[]>>;
   gallery: picture[];
+  tags: string[];
 };
 
 type HeaderProps = {
   setPopup: Dispatch<SetStateAction<boolean>>;
   popup: boolean;
   loadGallery: (tag: string) => Promise<void>;
+  tags: string[];
 };
 
 type ButtonProps = {
@@ -25,6 +27,7 @@ type ButtonProps = {
   width: number;
   height: number;
   primary?: boolean;
+  activeFilter?: string;
 };
 
 export type { Props, HeaderProps, ButtonProps, picture };

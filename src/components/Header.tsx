@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 import type { HeaderProps } from '../utils/Props';
 import Button from './Button';
+import { useState } from 'react';
 
-export default function Header({ setPopup, popup, loadGallery }: HeaderProps) {
-  const filters: string[] = [
-    'happy',
-    'sad',
-    'thoughtful',
-    'relieved',
-    'depressed',
-  ];
+export default function Header({
+  setPopup,
+  popup,
+  loadGallery,
+  tags,
+}: HeaderProps) {
+  const [activeFilter, setActiveFilter] = useState<string>();
+
+  function handleClick(tag: string) {
+    setActiveFilter(tag);
+    loadGallery(tag);
+  }
 
   return (
     <StyledHeader>
@@ -17,19 +22,20 @@ export default function Header({ setPopup, popup, loadGallery }: HeaderProps) {
 
       <div>
         <p>Filters: </p>
-        {filters.map((filter) => (
+        {tags.map((tag) => (
           <Button
-            key={filter}
+            key={tag}
             width={100}
             height={30}
-            onClick={() => loadGallery(filter)}
-            name={filter}
+            onClick={() => handleClick(tag)}
+            name={tag}
+            activeFilter={activeFilter}
           />
         ))}
         <Button
           width={30}
           height={30}
-          onClick={() => loadGallery('gallery')}
+          onClick={() => handleClick('gallery')}
           name='X'
         />
       </div>

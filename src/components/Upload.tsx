@@ -4,12 +4,13 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import Button from './Button';
 import { Props } from '../utils/Props';
 
-export default function Upload({ setGallery, gallery, setPopup }: Props) {
+export default function Upload({ setGallery, gallery, setPopup, tags }: Props) {
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
 
-  const [tags, setTags] = useState<string[]>(['gallery']);
+  const [uploadTags, setUploadTags] = useState<string[]>(['gallery']);
+  console.log(uploadTags);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,7 +20,7 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
     if (selectedImage !== undefined) {
       const data = new FormData();
       data.append('file', selectedImage);
-      data.append('tags', tags.toString());
+      data.append('tags', uploadTags.toString());
       data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET!);
       try {
         const response = await fetch(
@@ -51,9 +52,11 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
       checked: boolean;
     };
     if (target.checked === true) {
-      setTags([...tags, target.value]);
+      setUploadTags([...uploadTags, target.value]);
     } else {
-      setTags(tags.filter((tag) => tag !== target.value));
+      setUploadTags(
+        uploadTags.filter((uploadTag) => uploadTag !== target.value)
+      );
     }
   }
   return (
@@ -91,51 +94,17 @@ export default function Upload({ setGallery, gallery, setPopup }: Props) {
         <fieldset>
           <legend>Categorys</legend>
           <section>
-            <label>
-              <input
-                onChange={handleCheckbox}
-                type='checkbox'
-                name='tags'
-                value='happy'
-              />
-              happy
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='tags'
-                value='sad'
-                onChange={handleCheckbox}
-              />
-              sad
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='tags'
-                value='thoughtful'
-                onChange={handleCheckbox}
-              />
-              thoughtful
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='tags'
-                value='relieved'
-                onChange={handleCheckbox}
-              />
-              relieved
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                name='tags'
-                value='depressed'
-                onChange={handleCheckbox}
-              />
-              depressed
-            </label>
+            {tags.map((tag) => (
+              <label key={tag}>
+                <input
+                  onChange={handleCheckbox}
+                  type='checkbox'
+                  name='tags'
+                  value={tag}
+                />
+                {tag}
+              </label>
+            ))}
           </section>
         </fieldset>
 

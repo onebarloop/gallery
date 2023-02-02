@@ -8,6 +8,7 @@ export default function Button({
   width,
   height,
   primary,
+  activeFilter,
 }: ButtonProps) {
   return (
     <StyledButton
@@ -16,6 +17,8 @@ export default function Button({
       width={width}
       height={height}
       primary={primary}
+      activeFilter={activeFilter}
+      name={name}
     >
       {name}
     </StyledButton>
@@ -25,7 +28,8 @@ export default function Button({
 const StyledButton = styled.button<ButtonProps>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  background-color: transparent;
+  background-color: ${(props) =>
+    props.activeFilter === props.name ? '#9f1515' : 'transparent'};
   border: ${(props) =>
     props.disabled ? '#c9c5c5 1px solid' : 'white 1px solid'};
   color: ${(props) => (props.disabled ? '#c9c5c5' : 'white ')};

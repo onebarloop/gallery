@@ -9,6 +9,7 @@ export default function Main({
   setPopup,
   gallery,
   setGallery,
+  tags,
 }: Props & { popup: boolean }) {
   const cld: Cloudinary = new Cloudinary({
     cloud: {
@@ -19,7 +20,12 @@ export default function Main({
   return (
     <StyledMain>
       {popup && (
-        <Upload setGallery={setGallery} setPopup={setPopup} gallery={gallery} />
+        <Upload
+          tags={tags}
+          setGallery={setGallery}
+          setPopup={setPopup}
+          gallery={gallery}
+        />
       )}
       <StyledGallery popup={popup}>
         {gallery.map(({ public_id }) => (
