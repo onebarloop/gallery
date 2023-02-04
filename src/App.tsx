@@ -6,8 +6,6 @@ import fetchGallery from './utils/fetchGallery';
 
 export default function App() {
   const [gallery, setGallery] = useState<picture[]>([]);
-
-  console.log(gallery);
   const [popup, setPopup] = useState<boolean>(false);
   const tags: string[] = [
     'happy',

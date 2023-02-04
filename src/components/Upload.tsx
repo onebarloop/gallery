@@ -10,7 +10,6 @@ export default function Upload({ setGallery, gallery, setPopup, tags }: Props) {
   );
 
   const [uploadTags, setUploadTags] = useState<string[]>(['gallery']);
-  console.log(uploadTags);
 
   const [loading, setLoading] = useState<boolean>(false);
 
