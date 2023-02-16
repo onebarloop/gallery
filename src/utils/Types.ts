@@ -1,17 +1,19 @@
 import { Dispatch, SetStateAction } from 'react';
 
-type picture = {
+type Picture = {
   public_id: string;
   width: number;
   height: number;
 };
 
-type Props = {
+type UploadProps = {
   setPopup: Dispatch<SetStateAction<boolean>>;
-  setGallery: React.Dispatch<React.SetStateAction<picture[]>>;
-  gallery: picture[];
+  setGallery: React.Dispatch<React.SetStateAction<Picture[]>>;
+  gallery: Picture[];
   tags: string[];
 };
+
+type MainProps = UploadProps & { popup: boolean };
 
 type HeaderProps = {
   setPopup: Dispatch<SetStateAction<boolean>>;
@@ -30,4 +32,4 @@ type ButtonProps = {
   activeFilter?: string;
 };
 
-export type { Props, HeaderProps, ButtonProps, picture };
+export type { Picture, UploadProps, MainProps, HeaderProps, ButtonProps };

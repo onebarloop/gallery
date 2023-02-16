@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import type { HeaderProps } from '../utils/Props';
+import type { HeaderProps } from '../utils/Types';
 import Button from './Button';
 import { useState } from 'react';
 
@@ -9,8 +9,10 @@ export default function Header({
   loadGallery,
   tags,
 }: HeaderProps) {
+  // Array saves the active filter in state
   const [activeFilter, setActiveFilter] = useState<string>();
 
+  // Clickhandler for the filter buttons
   function handleClick(tag: string) {
     setActiveFilter(tag);
     loadGallery(tag);
@@ -19,13 +21,11 @@ export default function Header({
   return (
     <StyledHeader>
       <h1>Gallery</h1>
-
       <div>
-        <p>Filters: </p>
         {tags.map((tag) => (
           <Button
             key={tag}
-            width={100}
+            width={120}
             height={30}
             onClick={() => handleClick(tag)}
             name={tag}
@@ -37,6 +37,7 @@ export default function Header({
           height={30}
           onClick={() => handleClick('gallery')}
           name='X'
+          primary
         />
       </div>
       <Button

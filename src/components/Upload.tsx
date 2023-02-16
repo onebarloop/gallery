@@ -2,24 +2,37 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Player } from '@lottiefiles/react-lottie-player';
 import Button from './Button';
-import { Props } from '../utils/Props';
+import { UploadProps } from '../utils/Types';
 
-export default function Upload({ setGallery, gallery, setPopup, tags }: Props) {
+export default function Upload({
+  setGallery,
+  gallery,
+  setPopup,
+  tags,
+}: UploadProps) {
+  // State stores the selected image
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
 
+  // Stores the selected tags as array
   const [uploadTags, setUploadTags] = useState<string[]>(['gallery']);
 
+  // True while uploading
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Submit function
   async function handleSubmit(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault();
     setLoading(true);
     if (selectedImage !== undefined) {
+      // New formdata is created
       const data = new FormData();
+      // Pictures is appended to formdata
       data.append('file', selectedImage);
+      // Tags are appended to formdata
       data.append('tags', uploadTags.toString());
+      // Cloudinary upload preset is appended to frormdata. This is oblifatory for cloudinary uploads
       data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET!);
       try {
         const response = await fetch(
@@ -34,25 +47,29 @@ export default function Upload({ setGallery, gallery, setPopup, tags }: Props) {
           console.error('Submit failed');
         }
       } catch (error) {
-        console.log(error);
+        console.log('An error occured: ' + error);
       }
     }
     setLoading(false);
     setPopup(false);
   }
 
+  // Event handler for the file input. Updates the state of "SelectedImage"
   function changeImage(event: React.SyntheticEvent): void {
     setSelectedImage((event.target as HTMLInputElement).files![0]);
   }
 
+  // Event handler for the checkbox input. Updates the state of "UploadTags"-array
   function handleCheckbox(event: React.SyntheticEvent) {
     const target = event.target as typeof event.target & {
       value: string;
       checked: boolean;
     };
     if (target.checked === true) {
+      // Add tag to the array if its not already selected, in which case...
       setUploadTags([...uploadTags, target.value]);
     } else {
+      // ... it is removed from the array
       setUploadTags(
         uploadTags.filter((uploadTag) => uploadTag !== target.value)
       );
@@ -69,7 +86,7 @@ export default function Upload({ setGallery, gallery, setPopup, tags }: Props) {
               className='player'
               loop
               autoplay
-              style={{ width: '300px', height: '600px' }}
+              style={{ width: '300px', height: '400px' }}
             />
           ) : (
             <img alt='pic' src={URL.createObjectURL(selectedImage)} />
@@ -123,8 +140,8 @@ const StyledPopup = styled.article`
   background-color: #1f1e1e;
   padding-top: 30px;
   top: 5vh;
-  width: 50%;
-  left: 50%;
+  width: 45%;
+  left: 52.5%;
   margin-left: -25vw;
   height: 90vh;
   display: flex;
@@ -177,11 +194,12 @@ const StyledImgInput = styled.label`
 
 const StyledWrapper = styled.div`
   border: 5px solid black;
-  width: 90%;
-  height: 90%;
+  width: 400px;
+  height: 400px;
   background-color: black;
-  overflow: hidden;
   padding: auto;
+
+  border: none;
 
   img {
     width: 100%;

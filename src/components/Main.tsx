@@ -2,7 +2,7 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { AdvancedImage } from '@cloudinary/react';
 import styled from 'styled-components';
 import Upload from './Upload';
-import type { Props } from '../utils/Props';
+import type { MainProps } from '../utils/Types';
 
 export default function Main({
   popup,
@@ -10,7 +10,8 @@ export default function Main({
   gallery,
   setGallery,
   tags,
-}: Props & { popup: boolean }) {
+}: MainProps) {
+  // New Cloudinary intance
   const cld: Cloudinary = new Cloudinary({
     cloud: {
       cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,

@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import type { picture } from './utils/Props';
+import type { Picture } from './utils/Types';
 import Main from './components/Main';
 import Header from './components/Header';
 import fetchGallery from './utils/fetchGallery';
 
 export default function App() {
-  const [gallery, setGallery] = useState<picture[]>([]);
+  // Single pictures are stored in state as array
+  const [gallery, setGallery] = useState<Picture[]>([]);
+
+  // Upload window popup
   const [popup, setPopup] = useState<boolean>(false);
+
+  // Tags for the upload and filter function
   const tags: string[] = [
     'happy',
     'sad',
@@ -15,10 +20,12 @@ export default function App() {
     'depressed',
   ];
 
-  async function loadGallery(tag: string) {
+  // Updates the state of gallery array
+  async function loadGallery(tag: string): Promise<void> {
     fetchGallery(tag, setGallery);
   }
 
+  // Load gallery is called once during page load
   useEffect(() => {
     loadGallery('gallery');
   }, []);
