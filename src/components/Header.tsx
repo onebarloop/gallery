@@ -60,6 +60,9 @@ const StyledHeader = styled.header`
   gap: 5px;
   padding: 0 30px 0 15px;
 
+  h1 {
+    font-size: 2.5em;
+  }
   div {
     display: flex;
     align-items: center;

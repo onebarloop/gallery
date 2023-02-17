@@ -12,13 +12,7 @@ export default function App() {
   const [popup, setPopup] = useState<boolean>(false);
 
   // Tags for the upload and filter function
-  const tags: string[] = [
-    'happy',
-    'sad',
-    'thoughtful',
-    'relieved',
-    'depressed',
-  ];
+  const tags: string[] = ['happy', 'sad', 'angry', 'relaxed', 'cute'];
 
   // Updates the state of gallery array
   async function loadGallery(tag: string): Promise<void> {
