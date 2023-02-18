@@ -19,7 +19,7 @@ export default function Main({
   });
 
   return (
-    <StyledMain>
+    <StyledMain data-testid='maintest'>
       {popup && (
         <Upload
           tags={tags}

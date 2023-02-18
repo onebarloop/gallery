@@ -19,7 +19,7 @@ export default function Header({
   }
 
   return (
-    <StyledHeader>
+    <StyledHeader data-testid='headertest'>
       <h1>Gallery</h1>
       <div>
         {tags.map((tag) => (
