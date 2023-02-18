@@ -30,7 +30,7 @@ export default function Upload({
       const data = new FormData();
       // Pictures is appended to formdata
       data.append('file', selectedImage);
-      // Tags are appended to formdata
+      // Tag array is appended to formdata as string
       data.append('tags', uploadTags.toString());
       // Cloudinary upload preset is appended to frormdata. This is oblifatory for cloudinary uploads
       data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET!);
@@ -140,10 +140,10 @@ const StyledPopup = styled.article`
   background-color: #1f1e1e;
   padding-top: 30px;
   top: 5vh;
-  width: 45%;
-  left: 52.5%;
-  margin-left: -25vw;
-  height: 90vh;
+  width: 600px;
+  margin-left: 50%;
+  left: -300px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
