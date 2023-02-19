@@ -6,14 +6,15 @@ type Picture = {
   height: number;
 };
 
-type UploadProps = {
+type Upload = {
   setPopup: Dispatch<SetStateAction<boolean>>;
   setGallery: React.Dispatch<React.SetStateAction<Picture[]>>;
   gallery: Picture[];
-  tags: string[];
 };
 
-type MainProps = UploadProps & { popup: boolean };
+type UploadPopupProps = Upload & { tags: string[] };
+
+type MainProps = UploadPopupProps & { popup: boolean };
 
 type HeaderProps = {
   setPopup: Dispatch<SetStateAction<boolean>>;
@@ -32,4 +33,11 @@ type ButtonProps = {
   activeFilter?: string;
 };
 
-export type { Picture, UploadProps, MainProps, HeaderProps, ButtonProps };
+export type {
+  Picture,
+  Upload,
+  UploadPopupProps,
+  MainProps,
+  HeaderProps,
+  ButtonProps,
+};

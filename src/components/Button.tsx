@@ -12,7 +12,6 @@ export default function Button({
 }: ButtonProps) {
   return (
     <StyledButton
-      data-testid='buttontest'
       onClick={onClick}
       disabled={disabled}
       width={width}
