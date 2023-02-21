@@ -30,7 +30,7 @@ export default function Main({
       )}
       <StyledGallery popup={popup}>
         {gallery.map(({ public_id }) => (
-          <StyledWrapper key={public_id}>
+          <StyledWrapper key={public_id} data-testid='picture'>
             <StyledImage cldImg={cld.image(public_id)} />
           </StyledWrapper>
         ))}
@@ -47,8 +47,8 @@ const StyledGallery = styled.div<{ popup: boolean }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  gap: 15px;
-  filter: ${(props) => props.popup && 'blur(10px)'};
+  gap: 30px;
+  filter: ${({ popup }) => popup && 'blur(10px)'};
   transition: filter 0.4s;
 `;
 

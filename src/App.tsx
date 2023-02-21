@@ -19,7 +19,7 @@ export default function App() {
     fetchGallery(tag, setGallery);
   }
 
-  // Load gallery is called once during page load
+  // 'loadgallery()' is called once after initial render
   useEffect(() => {
     loadGallery('gallery');
   }, []);

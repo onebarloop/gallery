@@ -15,8 +15,8 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
   // True while uploading
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Submit handler
-  async function handleSubmit(event: React.SyntheticEvent): Promise<void> {
+  // Event handler submit button
+  async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault();
     setLoading(true);
     if (selectedImage !== undefined) {
@@ -49,16 +49,17 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
   }
 
   // Event handler for the file input. Updates the state of "SelectedImage"
-  function handleChangeImage(event: React.SyntheticEvent): void {
+  function handleChangeImage(event: React.ChangeEvent): void {
     setSelectedImage((event.target as HTMLInputElement).files![0]);
   }
 
   // Event handler for the checkbox input. Updates the state of "UploadTags"-array
-  function handleCheckbox(event: React.SyntheticEvent) {
+  function handleCheckbox(event: React.ChangeEvent): void {
     const target = event.target as typeof event.target & {
       value: string;
       checked: boolean;
     };
+
     if (target.checked === true) {
       // Add tag to the array if its not already selected, in which case...
       setUploadTags([...uploadTags, target.value]);
@@ -70,7 +71,6 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
     }
   }
 
-  //
   return {
     loading,
     selectedImage,
