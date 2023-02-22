@@ -31,6 +31,16 @@ test('Popup closes when "X" is clicked', () => {
   expect(popup).not.toBeInTheDocument();
 });
 
+test('Checkbox gets checked when clicked', () => {
+  render(<App />);
+  const button = screen.getByText('NEW');
+  fireEvent.click(button);
+  const popup = screen.getByTestId('uploadtest');
+  const checkbox = within(popup).getByDisplayValue('cute');
+  fireEvent.click(checkbox);
+  expect(checkbox).toBeChecked();
+});
+
 test('Filter buttons change color when selected', () => {
   render(<App />);
   const button = screen.getByRole('button', { name: 'happy' });
