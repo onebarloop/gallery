@@ -11,7 +11,6 @@ export default function Main({
   setGallery,
   tags,
 }: MainProps) {
-  // New Cloudinary intance
   const cld: Cloudinary = new Cloudinary({
     cloud: {
       cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,
