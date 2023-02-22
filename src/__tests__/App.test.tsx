@@ -30,3 +30,11 @@ test('Popup closes when "X" is clicked', () => {
   fireEvent.click(close);
   expect(popup).not.toBeInTheDocument();
 });
+
+test('Filter buttons change color when selected', () => {
+  render(<App />);
+  const button = screen.getByRole('button', { name: 'happy' });
+  expect(button).toHaveStyle('background-color: transparent');
+  fireEvent.click(button);
+  expect(button).toHaveStyle('background-color: #9f1515');
+});
