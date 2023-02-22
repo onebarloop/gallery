@@ -7,4 +7,6 @@ test('Button is clickable', () => {
   const button = screen.getByRole('button');
   fireEvent.click(button);
   expect(mockCallBack.mock.calls.length).toEqual(1);
+  fireEvent.click(button);
+  expect(mockCallBack.mock.calls.length).toEqual(2);
 });
