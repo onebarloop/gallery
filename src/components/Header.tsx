@@ -9,10 +9,8 @@ export default function Header({
   loadGallery,
   tags,
 }: HeaderProps) {
-  // Array saves the active filter in state
   const [activeFilter, setActiveFilter] = useState<string>();
 
-  // Clickhandler for the filter buttons
   function handleClick(tag: string) {
     setActiveFilter(tag);
     loadGallery(tag);

@@ -10,7 +10,6 @@ export default function Upload({
   setPopup,
   tags,
 }: UploadPopupProps) {
-  // Custom hook is called
   const {
     loading,
     selectedImage,
