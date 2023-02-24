@@ -12,15 +12,13 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault();
+    const preset = process.env.REACT_APP_CLOUDINARY_PRESET;
     setLoading(true);
-    if (selectedImage !== undefined) {
+    if (selectedImage !== undefined && preset !== undefined) {
       const data = new FormData();
-
       data.append('file', selectedImage);
-
       data.append('tags', uploadTags.toString());
-
-      data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET!);
+      data.append('upload_preset', preset);
       try {
         const response = await fetch(
           `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}/image/upload`,
@@ -36,13 +34,17 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
       } catch (error) {
         console.log('An error occured: ' + error);
       }
+    } else if (preset === undefined) {
+      console.error('ERROR: No cloudinary upload-preset defined');
     }
     setLoading(false);
     setPopup(false);
   }
 
   function handleChangeImage(event: React.ChangeEvent): void {
-    setSelectedImage((event.target as HTMLInputElement).files![0]);
+    setSelectedImage(
+      (event.target as HTMLInputElement & { files: Blob[] }).files[0]
+    );
   }
 
   function handleCheckbox(event: React.ChangeEvent): void {
