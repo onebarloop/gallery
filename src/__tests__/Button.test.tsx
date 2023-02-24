@@ -10,3 +10,7 @@ test('Button is clickable', () => {
   fireEvent.click(button);
   expect(callBackMock.mock.calls.length).toEqual(2);
 });
+
+test('This test will fail', () => {
+  expect(12).toBeGreaterThan(13);
+});
