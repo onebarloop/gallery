@@ -11,6 +11,7 @@ test('Button is clickable', () => {
   expect(callBackMock.mock.calls.length).toEqual(2);
 });
 
-test('This test will fail', () => {
-  expect(12).toBeGreaterThan(13);
+// Test for github workflows
+test('This test will not fail anymore', () => {
+  expect(13).toBeGreaterThan(12);
 });
