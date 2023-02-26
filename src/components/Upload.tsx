@@ -18,6 +18,8 @@ export default function Upload({
     handleChangeImage,
   } = useUpload({ setGallery, setPopup, gallery });
 
+  const unusedVar = 'testing linter';
+
   return (
     <StyledPopup data-testid='uploadtest'>
       <Button width={30} height={30} name='X' onClick={() => setPopup(false)} />
