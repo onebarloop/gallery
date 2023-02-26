@@ -17,8 +17,6 @@ export default function Main({
     },
   });
 
-  const unusedVar = 'testing linter';
-
   return (
     <StyledMain data-testid='maintest'>
       {popup && (
