@@ -31,5 +31,6 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
+          continue_on_error: false
           eslint_extensions: tsx,ts,js
           eslint: true
