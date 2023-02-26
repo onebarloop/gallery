@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Lint
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
     branches: [main]
 
 jobs:
-  Jest:
+  Eslint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run Tests
+      - name: Run Linters
         run: |
-          npm install 
-          npm test
+          npm install
+          npm run eslint
