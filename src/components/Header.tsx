@@ -16,8 +16,6 @@ export default function Header({
     loadGallery(tag);
   }
 
-  const unusedVar = 'testing linter';
-
   return (
     <StyledHeader data-testid='headertest'>
       <h1>Gallery</h1>
