@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { Upload } from './Types';
+import { switchPopup } from '../app/popupSlice';
+import { useAppDispatch } from '../app/hooks';
 
-export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
+export default function useUpload({ setGallery, gallery }: Upload) {
   const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
     undefined
   );
+
+  const dispatch = useAppDispatch();
 
   const [uploadTags, setUploadTags] = useState<string[]>(['gallery']);
 
@@ -38,7 +42,7 @@ export default function useUpload({ setGallery, setPopup, gallery }: Upload) {
       console.error('ERROR: No cloudinary upload-preset defined');
     }
     setLoading(false);
-    setPopup(false);
+    dispatch(switchPopup());
   }
 
   function handleChangeImage(event: React.ChangeEvent): void {

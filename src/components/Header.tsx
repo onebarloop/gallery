@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import type { HeaderProps } from '../utils/Types';
 import Button from './Button';
 import { useState } from 'react';
+import { useAppDispatch } from '../app/hooks';
+import { switchPopup } from '../app/popupSlice';
 
-export default function Header({
-  setPopup,
-  popup,
-  loadGallery,
-  tags,
-}: HeaderProps) {
+export default function Header({ loadGallery, tags }: HeaderProps) {
   const [activeFilter, setActiveFilter] = useState<string>();
+
+  const dispatch = useAppDispatch();
 
   function handleClick(tag: string) {
     setActiveFilter(tag);
@@ -42,7 +41,7 @@ export default function Header({
         name={'NEW'}
         width={100}
         height={60}
-        onClick={() => setPopup(!popup)}
+        onClick={() => dispatch(switchPopup())}
         primary
       />
     </StyledHeader>
