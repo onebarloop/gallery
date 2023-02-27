@@ -19,6 +19,8 @@ test('Popup is only rendered when button is clicked', () => {
   fireEvent.click(button);
   const popup = screen.getByText('Choose Picture');
   expect(popup).toBeInTheDocument();
+  // Because of redux, the popup must be closed before the next test. TODO: Test Render function with individual Provider
+  fireEvent.click(button);
 });
 
 test('Popup closes when "X" is clicked', () => {
