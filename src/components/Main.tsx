@@ -3,31 +3,23 @@ import { AdvancedImage } from '@cloudinary/react';
 import styled from 'styled-components';
 import Upload from './Upload';
 import type { MainProps } from '../utils/Types';
+import { useAppSelector } from '../app/hooks';
 
-export default function Main({
-  popup,
-  setPopup,
-  gallery,
-  setGallery,
-  tags,
-}: MainProps) {
+export default function Main({ gallery, setGallery, tags }: MainProps) {
   const cld: Cloudinary = new Cloudinary({
     cloud: {
       cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,
     },
   });
 
+  const reduxPopup = useAppSelector((state) => state.popup.value);
+
   return (
     <StyledMain data-testid='maintest'>
-      {popup && (
-        <Upload
-          tags={tags}
-          setGallery={setGallery}
-          setPopup={setPopup}
-          gallery={gallery}
-        />
+      {reduxPopup && (
+        <Upload tags={tags} setGallery={setGallery} gallery={gallery} />
       )}
-      <StyledGallery popup={popup}>
+      <StyledGallery reduxPopup={reduxPopup}>
         {gallery.map(({ public_id }) => (
           <StyledWrapper key={public_id} data-testid='picture'>
             <StyledImage cldImg={cld.image(public_id)} />
@@ -42,12 +34,12 @@ const StyledMain = styled.main`
   padding: 30px 0;
 `;
 
-const StyledGallery = styled.div<{ popup: boolean }>`
+const StyledGallery = styled.div<{ reduxPopup: boolean }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 30px;
-  filter: ${({ popup }) => popup && 'blur(10px)'};
+  filter: ${({ reduxPopup }) => reduxPopup && 'blur(10px)'};
   transition: filter 0.4s;
 `;
 

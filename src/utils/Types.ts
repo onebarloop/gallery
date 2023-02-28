@@ -5,18 +5,15 @@ type Picture = {
 };
 
 type Upload = {
-  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
   setGallery: React.Dispatch<React.SetStateAction<Picture[]>>;
   gallery: Picture[];
 };
 
 type UploadPopupProps = Upload & { tags: string[] };
 
-type MainProps = UploadPopupProps & { popup: boolean };
+type MainProps = UploadPopupProps;
 
 type HeaderProps = {
-  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
-  popup: boolean;
   loadGallery: (tag: string) => Promise<void>;
   tags: string[];
 };

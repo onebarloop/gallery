@@ -3,11 +3,13 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import Button from './Button';
 import { UploadPopupProps } from '../utils/Types';
 import useUpload from '../utils/useUpload';
+import { useAppDispatch } from '../app/hooks';
+import { switchPopup } from '../app/popupSlice';
 
 export default function Upload({
   setGallery,
   gallery,
-  setPopup,
+
   tags,
 }: UploadPopupProps) {
   const {
@@ -16,11 +18,18 @@ export default function Upload({
     handleSubmit,
     handleCheckbox,
     handleChangeImage,
-  } = useUpload({ setGallery, setPopup, gallery });
+  } = useUpload({ setGallery, gallery });
+
+  const dispatch = useAppDispatch();
 
   return (
     <StyledPopup data-testid='uploadtest'>
-      <Button width={30} height={30} name='X' onClick={() => setPopup(false)} />
+      <Button
+        width={30}
+        height={30}
+        name='X'
+        onClick={() => dispatch(switchPopup())}
+      />
       {selectedImage !== undefined ? (
         <StyledWrapper>
           {loading ? (
