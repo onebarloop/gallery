@@ -1,30 +1,31 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import App from '../App';
+import { renderWithProviders } from '../app/test-utils';
+
+const initialState = { value: false };
 
 test('App renders Header', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   expect(screen.getByText('Gallery')).toBeInTheDocument();
 });
 
 test('App renders Main', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   expect(screen.getByTestId('maintest')).toBeInTheDocument();
 });
 
 test('Popup is only rendered when button is clicked', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   const button = screen.getByText('NEW');
   const noPopup = screen.queryByText('Choose Picture');
   expect(noPopup).not.toBeInTheDocument();
   fireEvent.click(button);
   const popup = screen.getByText('Choose Picture');
   expect(popup).toBeInTheDocument();
-  // Because of redux, the popup must be closed before the next test. TODO: Test Render function with individual Provider
-  fireEvent.click(button);
 });
 
 test('Popup closes when "X" is clicked', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   const button = screen.getByRole('button', { name: 'NEW' });
   fireEvent.click(button);
   const popup = screen.getByTestId('uploadtest');
@@ -34,7 +35,7 @@ test('Popup closes when "X" is clicked', () => {
 });
 
 test('Checkbox gets checked when clicked', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   const button = screen.getByText('NEW');
   fireEvent.click(button);
   const popup = screen.getByTestId('uploadtest');
@@ -44,7 +45,7 @@ test('Checkbox gets checked when clicked', () => {
 });
 
 test('Filter buttons change color when selected', () => {
-  render(<App />);
+  renderWithProviders(<App />, { preloadedState: { popup: initialState } });
   const button = screen.getByRole('button', { name: 'happy' });
   expect(button).toHaveStyle('background-color: transparent');
   fireEvent.click(button);
